@@ -1,26 +1,54 @@
 <script>
 export default {
-  props: ['quote'],
-  emits: ['history'],
- 
-}
+  props: ["quote", "message"],
+  emits: ["history", "reload"],
+};
 </script>
 
 <template>
   <div v-if="quote" class="quotes-block">
-      <p class="quotes">
-        {{ quote[0].quote }}
-      </p>
-      <p class="author">
-        {{ quote[0].author }}
-      </p>
-      <button @click="$emit('history')" class="get-quotes">get</button>
-    </div>
+    <p class="quotes">
+      {{ quote[0].quote }}
+    </p>
+    <p class="author">
+      {{ quote[0].author }}
+    </p>
+    <button @click="$emit('history')" class="btn">get</button>
+  </div>
+  <div v-if="message" class="error-block">
+    <p >
+      {{ message }}
+    </p>
+    <button @click="$emit('reload')" class="btn">reload</button>
+  </div>
 </template>
 
 <style>
+.error-block {
+  width: 90vw;
+  margin: auto;
+  background-color: lightskyblue;
+  border-radius: 10px;
+  padding: 16px;
+  font-size: 24px;
+}
+
+.error-block p {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.error-block .btn {
+  background-color: lightcoral;
+  box-shadow: 0px 3px 3px #f35a5a;
+}
+
+.error-block .btn:hover {
+  background-color: #f4a4a4;
+}
+
 .quotes-block {
-  width: 50%;
+  width: 90vw;
   background-color: #fff;
   margin: 0 auto 50px;
   border-radius: 10px;
@@ -37,7 +65,7 @@ export default {
   margin-bottom: 8px;
 }
 
-.get-quotes {
+.btn {
   cursor: pointer;
   font-weight: bold;
   text-transform: uppercase;
@@ -49,12 +77,24 @@ export default {
   transition: all 0.3s;
 }
 
-.get-quotes:hover {
+.btn:hover {
   background-color: lightskyblue;
 }
 
-.get-quotes:active {
+.btn:active {
   box-shadow: none;
   transform: translateY(2px);
+}
+
+@media (min-width: 900px) {
+  .error-block, .quotes-block {
+    width: 70vw;
+  }
+}
+
+@media (min-width: 1400px) {
+  .error-block, .quotes-block {
+    width: 50vw;
+  }
 }
 </style>
