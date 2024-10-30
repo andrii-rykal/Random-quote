@@ -27,7 +27,7 @@ export default {
   methods: {
     onClick() {
       if (this.quote[0]) {
-        this.quotes.push(this.quote[0]);
+        this.quotes.unshift(this.quote[0]);
       }
       this.download();
     },

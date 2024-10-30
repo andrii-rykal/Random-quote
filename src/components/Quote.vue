@@ -16,7 +16,7 @@ export default {
   <div v-if="Array.isArray(quote) && quote.length > 0" class="quotes-block">
     <p class="quotes">
       {{ quote[0].quote }}
-    </p>    
+    </p>
     <p class="author">
       {{ quote[0].author }} ({{ quote[0].category }})
     </p>
