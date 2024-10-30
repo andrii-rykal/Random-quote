@@ -5,12 +5,13 @@ export default {
 </script>
 
 <template>
-  <div class="quotes-block">
-    {{ quote }}
+  <div v-if="quote" class="quotes-block">
       <p class="quotes">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, a.
+        {{ quote.content }}
       </p>
-      <p class="author">Lorem, ipsum.</p>
+      <p class="author">
+        {{ quote.author }}
+      </p>
       <button class="get-quotes">get</button>
     </div>
 </template>

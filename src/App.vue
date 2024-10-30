@@ -13,18 +13,15 @@ export default {
   data() {
     return {
       quote: null,
+      quotes: [],
     };
   },
   mounted() {
     getQuote()
       .then((response) => {
       this.quote = response.data;
-      console.log(this.quote);
+      console.log(response);
       })
-      .catch((error) => {
-        this.error = "Error fetching quote: " + error.message;
-        console.error(this.error); 
-      });
   },
 };
 </script>
