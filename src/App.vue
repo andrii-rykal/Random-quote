@@ -1,14 +1,16 @@
 <script>
 import Quote from "./components/Quote.vue";
 import History from "./components/History.vue";
+import { getQuote, getQuoteCategory } from "./api/quotes";
+import Categories from "./components/Categories.vue";
 import Loader from "./components/Loader.vue";
-import { getQuote } from "./api/quotes";
 
 export default {
   components: {
     Quote,
     History,
     Loader,
+    Categories,
   },
   data() {
     return {
@@ -16,6 +18,7 @@ export default {
       quotes: [],
       errorMessage: "",
       isLoading: false,
+      category: '',
     };
   },
   mounted() {
@@ -23,7 +26,7 @@ export default {
   },
   methods: {
     onClick() {
-      if (this.quote) {
+      if (this.quote[0]) {
         this.quotes.push(this.quote[0]);
       }
       this.download();
@@ -31,7 +34,7 @@ export default {
     download() {
       this.errorMessage = "";
       this.isLoading = true;
-      getQuote()
+      (this.category ? getQuoteCategory(this.category) : getQuote())
         .then((response) => {
           this.quote = response.data;
         })
@@ -50,6 +53,7 @@ export default {
 <template>
   <main>
     <h1 class="title">Quotes of famous people</h1>
+    <Categories @category="category = $event" />
     <Loader v-if="isLoading" />
     <Quote
       :quote="quote"

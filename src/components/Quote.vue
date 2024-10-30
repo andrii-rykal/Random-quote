@@ -4,7 +4,7 @@ export default {
   emits: ["history", "reload"],
   methods: {
     copyToClipboard() {
-      if (this.quote) {
+      if (this.quote && this.quote.length > 0) {
         navigator.clipboard.writeText(this.quote[0].quote)
       }
     },
@@ -13,12 +13,12 @@ export default {
 </script>
 
 <template>
-  <div v-if="quote" class="quotes-block">
+  <div v-if="Array.isArray(quote) && quote.length > 0" class="quotes-block">
     <p class="quotes">
       {{ quote[0].quote }}
     </p>    
     <p class="author">
-      {{ quote[0].author }}
+      {{ quote[0].author }} ({{ quote[0].category }})
     </p>
     <div class="block-btn">
       <button @click="$emit('history')" class="btn">get</button>

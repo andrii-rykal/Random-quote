@@ -21,7 +21,7 @@ export default {
         <button @click="copyToClipboard(quote)">Copy</button>
       </div>
       <p class="author">
-        {{ quote.author }}
+        {{ quote.author }} ({{ quote.category }})
       </p>
       <hr>
     </div>
