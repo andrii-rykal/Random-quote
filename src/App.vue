@@ -50,7 +50,6 @@ export default {
 <template>
   <main>
     <h1 class="title">Quotes of famous people</h1>
-    <MainName />
     <Loader v-if="isLoading" />
     <Quote
       :quote="quote"
