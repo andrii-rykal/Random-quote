@@ -4,5 +4,5 @@ import axios from "axios";
 //   baseURL: '/api',
 // });
 export const client = axios.create({
-  baseURL: 'https://api.quotable.io',
+  baseURL: 'https://api.api-ninjas.com',
 });

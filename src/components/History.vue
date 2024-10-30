@@ -1,17 +1,20 @@
 <script>
 export default {
+  props: ["quotes"],
 };
 </script>
 
 <template>
   <div class="history quotes-block">
-      <div>
-        <p class="quotes">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia, a.
-        </p>
-        <p class="author">Lorem, ipsum.</p>
-      </div>
+    <div v-if="quotes.length > 0" v-for="quote of quotes">
+      <p class="quotes">
+        {{ quote[0].quote }}
+      </p>
+      <p class="author">
+        {{ quote[0].author }}
+      </p>
     </div>
+  </div>
 </template>
 
 <style>

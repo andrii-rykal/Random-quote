@@ -1,18 +1,19 @@
 <script>
 export default {
-  props: ['quote']
+  props: ['quote'],
+  emits: ['history'],
 }
 </script>
 
 <template>
   <div v-if="quote" class="quotes-block">
       <p class="quotes">
-        {{ quote.content }}
+        {{ quote[0].quote }}
       </p>
       <p class="author">
-        {{ quote.author }}
+        {{ quote[0].author }}
       </p>
-      <button class="get-quotes">get</button>
+      <button @click="$emit('history', quote)" class="get-quotes">get</button>
     </div>
 </template>
 

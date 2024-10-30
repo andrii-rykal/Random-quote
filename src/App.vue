@@ -20,7 +20,7 @@ export default {
     getQuote()
       .then((response) => {
       this.quote = response.data;
-      console.log(response);
+      console.log(this.quote);
       })
   },
 };
@@ -29,8 +29,8 @@ export default {
 <template>
   <main>
     <MainName />
-    <Quote :quote="quote" />
-    <History />
+    <Quote :quote="quote" @change="quotes.push($event)" />
+    <History :quotes="quotes"/>
   </main>
 </template>
 
