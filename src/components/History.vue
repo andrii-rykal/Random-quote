@@ -1,18 +1,20 @@
 <script>
 export default {
   props: ["quotes"],
+  
 };
 </script>
 
 <template>
-  <div class="history quotes-block">
-    <div v-if="quotes.length > 0" v-for="quote of quotes">
+  <div v-if="quotes.length > 0" class="history quotes-block">
+    <div v-for="quote in quotes">
       <p class="quotes">
-        {{ quote[0].quote }}
+        {{ quote.quote }}
       </p>
       <p class="author">
-        {{ quote[0].author }}
+        {{ quote.author }}
       </p>
+      <hr>
     </div>
   </div>
 </template>
@@ -23,10 +25,12 @@ export default {
 }
 
 .history .quotes {
+  padding-top: 5px;
   font-size: 16px;
 }
 
 .history .author {
   font-size: 14px;
 }
+
 </style>

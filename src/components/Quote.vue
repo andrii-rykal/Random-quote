@@ -2,6 +2,7 @@
 export default {
   props: ['quote'],
   emits: ['history'],
+ 
 }
 </script>
 
@@ -13,7 +14,7 @@ export default {
       <p class="author">
         {{ quote[0].author }}
       </p>
-      <button @click="$emit('history', quote)" class="get-quotes">get</button>
+      <button @click="$emit('history')" class="get-quotes">get</button>
     </div>
 </template>
 

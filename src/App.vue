@@ -23,13 +23,25 @@ export default {
       console.log(this.quote);
       })
   },
+  methods: {
+    onClick() {
+      this.quotes.push(this.quote[0]);
+      getQuote()
+      .then((response) => {
+        this.quote = response.data;
+        console.log(this.quotes);
+      
+      })
+    }
+  }
+  
 };
 </script>
 
 <template>
   <main>
     <MainName />
-    <Quote :quote="quote" @change="quotes.push($event)" />
+    <Quote :quote="quote" @history="onClick" />
     <History :quotes="quotes"/>
   </main>
 </template>
