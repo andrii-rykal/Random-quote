@@ -2,6 +2,13 @@
 export default {
   props: ["quote", "message"],
   emits: ["history", "reload"],
+  methods: {
+    copyToClipboard() {
+      if (this.quote) {
+        navigator.clipboard.writeText(this.quote[0].quote)
+      }
+    },
+  }
 };
 </script>
 
@@ -9,11 +16,14 @@ export default {
   <div v-if="quote" class="quotes-block">
     <p class="quotes">
       {{ quote[0].quote }}
-    </p>
+    </p>    
     <p class="author">
       {{ quote[0].author }}
     </p>
-    <button @click="$emit('history')" class="btn">get</button>
+    <div class="block-btn">
+      <button @click="$emit('history')" class="btn">get</button>
+      <button v-if="quote" @click="copyToClipboard" class="btn">Copy Quote</button>
+    </div>
   </div>
   <div v-if="message" class="error-block">
     <p >
@@ -24,6 +34,16 @@ export default {
 </template>
 
 <style>
+.block-btn {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.block-btn p {
+  color: grey;
+}
+
 .error-block {
   width: 90vw;
   margin: auto;
@@ -69,7 +89,7 @@ export default {
   cursor: pointer;
   font-weight: bold;
   text-transform: uppercase;
-  padding: 5px 30px;
+  padding: 5px 30px 2px;
   border-radius: 10px;
   border: none;
   background-color: lightblue;

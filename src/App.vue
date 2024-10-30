@@ -1,8 +1,8 @@
 <script>
 import Quote from "./components/Quote.vue";
 import History from "./components/History.vue";
-import { getQuote } from "./api/quotes";
 import Loader from "./components/Loader.vue";
+import { getQuote } from "./api/quotes";
 
 export default {
   components: {
@@ -25,7 +25,6 @@ export default {
     onClick() {
       if (this.quote) {
         this.quotes.push(this.quote[0]);
-        // this.quote = null;
       }
       this.download();
     },
