@@ -1,7 +1,7 @@
 <script>
 export default {
   props: ["quote", "message"],
-  emits: ["history", "reload"],
+  emits: ["history", "reload", "share"],
   methods: {
     copyToClipboard() {
       if (this.quote && this.quote.length > 0) {
@@ -23,6 +23,7 @@ export default {
     <div class="block-btn">
       <button @click="$emit('history')" class="btn">get quote</button>
       <button v-if="quote" @click="copyToClipboard" class="btn">Copy Quote</button>
+      <button @click="$emit('share')" class="btn">to share</button>
     </div>
   </div>
   <div v-if="message" class="error-block">

@@ -4,6 +4,7 @@ import History from "./components/History.vue";
 import { getQuote, getQuoteCategory } from "./api/quotes";
 import Categories from "./components/Categories.vue";
 import Loader from "./components/Loader.vue";
+import Social from "./components/Social.vue";
 
 export default {
   components: {
@@ -11,6 +12,7 @@ export default {
     History,
     Loader,
     Categories,
+    Social,
   },
   data() {
     return {
@@ -19,6 +21,7 @@ export default {
       errorMessage: "",
       isLoading: false,
       category: '',
+      isShare: false,
     };
   },
   mounted() {
@@ -46,6 +49,24 @@ export default {
           this.isLoading = false;
         });
     },
+    shareTelegram() {
+      if (this.quote && this.quote.length > 0) {
+        const quoteText = encodeURIComponent(`${this.quote[0].quote} - ${this.quote[0].author}`);
+        const telegramUrl = `https://t.me/share/url?url=${window.location.href}&text=${quoteText}`;
+        window.open(telegramUrl, "_blank");
+        console.log(quoteText);
+        this.isShare = false;
+      }
+    },
+    shareFacebook() {
+      if (this.quote && this.quote.length > 0) {
+        const currentUrl = window.location.href; 
+    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`;
+        window.open(facebookUrl, "_blank");
+        this.isShare = false;
+    
+      }
+    },
   },
 };
 </script>
@@ -54,12 +75,17 @@ export default {
   <main>
     <h1 class="title">Quotes of famous people</h1>
     <Loader v-if="isLoading" />
+    <Social v-if="isShare" @close="isShare = false"
+    @telegramm="shareTelegram"
+    @facebook="shareFacebook"
+    />
     <Categories class="category" @category="category = $event" />
     <Quote
       :quote="quote"
+      :message="errorMessage"
       @history="onClick"
       @reload="download"
-      :message="errorMessage"
+      @share="isShare = true"
     />
     <History :quotes="quotes" />
   </main>
