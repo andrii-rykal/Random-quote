@@ -53,8 +53,8 @@ export default {
 <template>
   <main>
     <h1 class="title">Quotes of famous people</h1>
-    <Categories @category="category = $event" />
     <Loader v-if="isLoading" />
+    <Categories class="category" @category="category = $event" />
     <Quote
       :quote="quote"
       @history="onClick"
@@ -72,5 +72,7 @@ export default {
   font-weight: bold;
   text-align: center;
   padding: 20px;
-  margin-bottom: 50px;
-}</style>
+  margin-bottom: 20px;
+}
+
+</style>

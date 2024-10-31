@@ -21,7 +21,7 @@ export default {
       {{ quote[0].author }} ({{ quote[0].category }})
     </p>
     <div class="block-btn">
-      <button @click="$emit('history')" class="btn">get</button>
+      <button @click="$emit('history')" class="btn">get quote</button>
       <button v-if="quote" @click="copyToClipboard" class="btn">Copy Quote</button>
     </div>
   </div>
@@ -37,6 +37,7 @@ export default {
 .block-btn {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 20px;
 }
 
