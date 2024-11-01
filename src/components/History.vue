@@ -41,6 +41,7 @@ export default defineComponent ({
   display: flex;
   justify-content: space-between;
   gap: 5px;
+  margin-bottom: 4px;
 }
 
 .copy-btn {
