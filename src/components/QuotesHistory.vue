@@ -1,20 +1,17 @@
 <script>
 import { copyToClipboard } from "@/data/copy";
-import { defineComponent, toRefs } from "vue";
+import { defineComponent } from "vue";
 
 export default defineComponent ({
   props: {
     quotes: Array,
   },
-  setup(props) {
-    const { quotes } = toRefs(props);
-
+  setup() {
     const copyQuote = (obj) => {
       copyToClipboard(obj);
     };
 
     return {
-      quotes,
       copyQuote
     }
   }
@@ -23,7 +20,7 @@ export default defineComponent ({
 
 <template>
   <div v-if="quotes.length > 0" class="history">
-    <div v-for="quote in quotes">
+    <div v-for="(quote, i) in quotes" :key="i">
       <div class="copy-block">
         <p class="quotes">
           {{ quote.quote }}
@@ -81,15 +78,16 @@ export default defineComponent ({
   margin: 0 50px 8px 0;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 768px) {
   .history {
     width: 70vw;
   }
 }
 
-@media (min-width: 1400px) {
+@media (min-width: 1024px) {
   .history {
     width: 50vw;
+    max-width: 800px;
   }
 }
 </style>

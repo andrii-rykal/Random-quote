@@ -1,51 +1,51 @@
 <script>
-import { defineComponent, onMounted, ref } from "vue";
-import Quote from "./components/Quote.vue";
-import History from "./components/History.vue";
-import { getQuotes } from "./api/quotes";
-import Categories from "./components/Categories.vue";
-import Loader from "./components/Loader.vue";
-import Social from "./components/Social.vue";
-import { shareOnFacebook, shareOnTelegram } from "./data/share";
+import { defineComponent, onMounted, ref } from 'vue';
+import FamousQuote from './components/FamousQuote.vue';
+import QuotesHistory from './components/QuotesHistory.vue';
+import { getQuotes } from './api/quotes';
+import SelectCategories from './components/SelectCategories.vue';
+import DownloadLoader from './components/DownloadLoader.vue';
+import SocialShare from './components/SocialShare.vue';
+import { shareOnFacebook, shareOnTelegram } from './data/share';
 
 export default defineComponent({
   components: {
-    Quote,
-    History,
-    Loader,
-    Categories,
-    Social,
+    FamousQuote,
+    QuotesHistory,
+    DownloadLoader,
+    SelectCategories,
+    SocialShare,
   },
   setup() {
     const quote = ref(null);
     const quotes = ref([]);
-    const errorMessage = ref("");
+    const errorMessage = ref('');
     const isLoading = ref(false);
-    const category = ref("");
+    const category = ref('');
     const isShare = ref(false);
 
     const download = () => {
-      errorMessage.value = "";
+      errorMessage.value = '';
       isLoading.value = true;
       isShare.value = false;
       (category.value ? getQuotes(category.value) : getQuotes())
         .then(({ data }) => {
           quote.value = data && data[0];
         })
-        .catch((error) => {
+        .catch(error => {
           errorMessage.value =
             error.response?.status === 404
-              ? "No quote found for this category."
-              : "Sorry, the server is currently unavailable. Try again later.";
+              ? 'No quote found for this category.'
+              : 'Sorry, the server is currently unavailable. Try again later.';
         })
         .finally(() => {
           isLoading.value = false;
         });
     };
 
-    const setCategory = (newCategory) => {
+    const setCategory = newCategory => {
       category.value = newCategory;
-    }
+    };
 
     const onClick = () => {
       if (quote.value) {
@@ -83,7 +83,7 @@ export default defineComponent({
       shareTelegram,
       setCategory,
       download,
-    }
+    };
   },
 });
 </script>
@@ -91,22 +91,26 @@ export default defineComponent({
 <template>
   <main>
     <h1 class="title">Quotes of famous people</h1>
-    <Loader v-if="isLoading" />
-    <Social
+    <DownloadLoader v-if="isLoading" />
+    <SocialShare
       v-if="isShare"
       @close="isShare = false"
       @telegramm="shareTelegram"
       @facebook="shareFacebook"
     />
-    <Categories v-if="!errorMessage && quote" class="category" @category="setCategory" />
-    <Quote
-      :quote="quote"
+    <SelectCategories
+      v-if="!errorMessage && quote"
+      class="category"
+      @category="setCategory"
+    />
+    <FamousQuote
+      :currentQuote="quote"
       :message="errorMessage"
       @history="onClick"
       @reload="download"
       @share="isShare = true"
     />
-    <History :quotes="quotes" />
+    <QuotesHistory :quotes="quotes" />
   </main>
 </template>
 

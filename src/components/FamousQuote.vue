@@ -1,40 +1,40 @@
 <script>
-import { copyToClipboard } from "@/data/copy";
-import { defineComponent, toRefs } from "vue";
+import { copyToClipboard } from '@/data/copy';
+import { defineComponent, toRefs } from 'vue';
 
 export default defineComponent({
   props: {
     quote: Object,
     message: String,
   },
-  emits: ["history", "reload", "share"],
+  emits: ['history', 'reload', 'share'],
   setup(props, { emit }) {
-    const { quote, message } = toRefs(props);
+    const { currentQuote: currentQuote, message: errorMessage } = toRefs(props);
 
-    const copyQuote = (obj) => {
+    const copyQuote = obj => {
       copyToClipboard(obj);
     };
 
     return {
-      quote,
-      message,
+      currentQuote,
+      errorMessage,
       copyQuote,
-      emitHistory: () => emit("history"),
-      emitReload: () => emit("reload"),
-      emitShare: () => emit("share"),
+      emitHistory: () => emit('history'),
+      emitReload: () => emit('reload'),
+      emitShare: () => emit('share'),
     };
   },
 });
 </script>
 
 <template>
-  <div v-if="quote" class="quotes-block">
+  <div v-if="currentQuote" class="quotes-block">
     <p class="quotes">
-      {{ quote.quote }}
+      {{ currentQuote.quote }}
     </p>
     <p class="author">
-      {{ quote.author }}
-      <span v-if="quote.category">({{ quote.category }})</span>
+      {{ currentQuote.author }}
+      <span v-if="currentQuote.category">({{ currentQuote.category }})</span>
     </p>
     <div class="block-btn">
       <button
@@ -44,15 +44,15 @@ export default defineComponent({
       >
         get quote
       </button>
-      <button v-if="quote" @click="copyQuote(quote)" class="btn">
+      <button v-if="currentQuote" @click="copyQuote(currentQuote)" class="btn">
         Copy Quote
       </button>
       <button @click="emitShare" class="btn">to share</button>
     </div>
   </div>
-  <div v-if="message" class="error-block">
+  <div v-if="errorMessage" class="error-block">
     <p>
-      {{ message }}
+      {{ errorMessage }}
     </p>
     <button @click="emitReload" class="btn">reload</button>
   </div>
@@ -63,7 +63,7 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  gap: 5px;
 }
 
 .error-block {
@@ -104,10 +104,12 @@ export default defineComponent({
 }
 
 .btn {
+  padding: 5px;
+  font-size: 12px;
+  letter-spacing: -0.5px;
   cursor: pointer;
   font-weight: bold;
   text-transform: uppercase;
-  padding: 5px 30px 2px;
   border-radius: 10px;
   border: none;
   transition: all 0.3s;
@@ -124,17 +126,29 @@ export default defineComponent({
   transform: translateY(2px);
 }
 
-@media (min-width: 900px) {
+@media (min-width: 768px) {
   .error-block,
   .quotes-block {
     width: 70vw;
   }
+
+  .btn {
+    padding: 5px 30px 3px;
+    font-size: 14px;
+    letter-spacing: normal;
+  }
 }
 
-@media (min-width: 1400px) {
+@media (min-width: 1024px) {
   .error-block,
   .quotes-block {
+    max-width: 800px;
     width: 50vw;
+  }
+
+  .btn {
+    padding: 5px 30px 3px;
+    font-size: 16px;
   }
 }
 </style>
