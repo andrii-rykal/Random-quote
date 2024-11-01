@@ -1,2 +1,14 @@
 @import './base.css';
 
+:root {
+  --primary-color: #87cefa;
+  --secondary-color: #add8e6;
+  --error-color: #ffcccb;
+  --error-shadow: #e57373;
+  --error-hover: #ff9999;
+  --button-shadow: #b0e0e6;
+  --title-color: #e7dcdc;
+  --history-bg-color: #d3d3d3;
+  --color-white: #fff;
+  --color-gray: #808080;
+}

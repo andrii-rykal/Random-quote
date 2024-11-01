@@ -22,7 +22,7 @@ export default {};
   height: 5em;
   margin: 1em auto;
   border: 0.5em solid #ddd;
-  border-left-color: coral;
+  border-left-color: var(--primary-color);
   animation: load 1.2s infinite linear;
 }
 

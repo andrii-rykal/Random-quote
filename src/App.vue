@@ -98,7 +98,7 @@ export default defineComponent({
       @telegramm="shareTelegram"
       @facebook="shareFacebook"
     />
-    <Categories class="category" @category="setCategory" />
+    <Categories v-if="!errorMessage && quote" class="category" @category="setCategory" />
     <Quote
       :quote="quote"
       :message="errorMessage"
@@ -118,5 +118,6 @@ export default defineComponent({
   text-align: center;
   padding: 20px;
   margin-bottom: 20px;
+  color: var(--title-color);
 }
 </style>

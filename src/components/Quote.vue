@@ -66,14 +66,11 @@ export default defineComponent({
   gap: 20px;
 }
 
-.block-btn p {
-  color: grey;
-}
-
 .error-block {
   width: 90vw;
   margin: auto;
-  background-color: lightskyblue;
+  background-color: var(--error-color);
+  box-shadow: 0px 3px 5px var(--error-shadow);
   border-radius: 10px;
   padding: 16px;
   font-size: 24px;
@@ -84,17 +81,12 @@ export default defineComponent({
   margin-bottom: 20px;
 }
 
-.error-block .btn {
-  background-color: lightcoral;
-  box-shadow: 0px 3px 3px #f35a5a;
-}
-
 .error-block .btn:hover {
-  background-color: #f4a4a4;
+  background-color: var(--error-hover);
 }
 
 .quotes-block {
-  background-color: #fff;
+  background-color: var(--color-white);
   width: 90vw;
   margin: 0 auto 50px;
   border-radius: 10px;
@@ -118,13 +110,13 @@ export default defineComponent({
   padding: 5px 30px 2px;
   border-radius: 10px;
   border: none;
-  background-color: lightblue;
-  box-shadow: 0px 3px 3px lightskyblue;
   transition: all 0.3s;
+  background-color: var(--primary-color);
+  box-shadow: 0px 3px 3px var(--button-shadow);
 }
 
 .btn:hover {
-  background-color: lightskyblue;
+  background-color: var(--secondary-color);
 }
 
 .btn:active {

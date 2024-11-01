@@ -50,12 +50,12 @@ export default defineComponent ({
   border: none;
   margin-top: 5px;
   cursor: pointer;
-  box-shadow: 0 2px 0 gray;
+  box-shadow: 0 2px 0 var(--color-gray);
   transition: all 0.3s;
 }
 
 .copy-btn:hover {
-  background-color: #fff;
+  background-color: var(--color-white);
 }
 
 .copy-btn:active {
@@ -63,7 +63,7 @@ export default defineComponent ({
   box-shadow: none;
 }
 .history {
-  background-color: lightgrey;
+  background-color: var(--history-bg-color);
   width: 90vw;
   margin: 0 auto 50px;
   border-radius: 10px;
@@ -78,7 +78,7 @@ export default defineComponent ({
 .author {
   font-size: 14px;
   text-align: right;
-  margin-bottom: 8px;
+  margin: 0 50px 8px 0;
 }
 
 @media (min-width: 900px) {

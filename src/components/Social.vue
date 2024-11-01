@@ -70,7 +70,7 @@ export default defineComponent({
   transform: translateX(-50%);
   width: 200px;
   height: 100px;
-  background-color: rgba(144, 238, 144, 0.9);
+  background-color: rgba(208, 228, 166, 0.9);
   border-radius: 10px;
   padding: 20px;
 }
