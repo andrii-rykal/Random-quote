@@ -1,40 +1,58 @@
 <script>
-export default {
-  props: ["quote", "message"],
+import { copyToClipboard } from '@/data/copy';
+import { defineComponent, toRefs } from 'vue';
+
+export default defineComponent ({
+  props: {
+    quote: Object,
+    message: String,
+  },
   emits: ["history", "reload", "share"],
-  methods: {
-    copyToClipboard() {
-      if (this.quote && this.quote.length > 0) {
-        navigator.clipboard.writeText(this.quote[0].quote)
-      }
-    },
+  setup(props, { emit }) {
+    const { quote, message } = toRefs(props);
+
+    const copyQuote = (obj) => {
+      copyToClipboard(obj);
+    };
+
+    return {
+      quote,
+      message,
+      copyQuote,
+      emitHistory: () => emit('history'),
+      emitReload: () => emit('reload'),
+      emitShare: () => emit('share')
+    }
   }
-};
+});
 </script>
 
 <template>
-  <div v-if="Array.isArray(quote) && quote.length > 0" class="quotes-block">
+  <div v-if="quote" class="quotes-block">
     <p class="quotes">
-      {{ quote[0].quote }}
+      {{ quote.quote }}
     </p>
     <p class="author">
-      {{ quote[0].author }} ({{ quote[0].category }})
+      {{ quote.author }}
+      <span v-if="quote.category">({{ quote.category }})</span>
     </p>
     <div class="block-btn">
-      <button @click="$emit('history')" class="btn">get quote</button>
-      <button v-if="quote" @click="copyToClipboard" class="btn">Copy Quote</button>
-      <button @click="$emit('share')" class="btn">to share</button>
+      <button @click="emitHistory" class="btn">get quote</button>
+      <button v-if="quote" @click="copyQuote(quote)" class="btn">
+        Copy Quote
+      </button>
+      <button @click="emitShare" class="btn">to share</button>
     </div>
   </div>
   <div v-if="message" class="error-block">
-    <p >
+    <p>
       {{ message }}
     </p>
-    <button @click="$emit('reload')" class="btn">reload</button>
+    <button @click="emitReload" class="btn">reload</button>
   </div>
 </template>
 
-<style>
+<style scoped>
 .block-btn {
   display: flex;
   align-items: center;
@@ -70,8 +88,8 @@ export default {
 }
 
 .quotes-block {
-  width: 90vw;
   background-color: #fff;
+  width: 90vw;
   margin: 0 auto 50px;
   border-radius: 10px;
   padding: 16px;
@@ -109,13 +127,15 @@ export default {
 }
 
 @media (min-width: 900px) {
-  .error-block, .quotes-block {
+  .error-block,
+  .quotes-block {
     width: 70vw;
   }
 }
 
 @media (min-width: 1400px) {
-  .error-block, .quotes-block {
+  .error-block,
+  .quotes-block {
     width: 50vw;
   }
 }

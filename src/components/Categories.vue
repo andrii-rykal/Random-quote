@@ -1,30 +1,36 @@
 <script>
-import categories from '../data/categories'
+import categories from "../data/categories";
 export default {
   data() {
     return {
-      categories, 
+      categories,
     };
   },
-  emits: ['category'],
+  emits: ["category"],
   methods: {
     handleCategoryChange(event) {
-      this.$emit('category', event.target.value); 
+      this.$emit("category", event.target.value);
     },
   },
-}
+};
 </script>
 
 <template>
   <div class="select-box">
     <select name="category" id="category" @change="handleCategoryChange">
       <option value="">Random category</option>
-      <option v-for="category, index in categories" :key="index" :value="category">{{ category }}</option>
+      <option
+        v-for="(category, index) in categories"
+        :key="index"
+        :value="category"
+      >
+        {{ category }}
+      </option>
     </select>
   </div>
 </template>
 
-<style>
+<style scoped>
 #category {
   border: none;
   border-radius: 5px;

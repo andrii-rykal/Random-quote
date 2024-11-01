@@ -1,12 +1,14 @@
 <script>
+import { defineComponent, onMounted, ref } from "vue";
 import Quote from "./components/Quote.vue";
 import History from "./components/History.vue";
-import { getQuote, getQuoteCategory } from "./api/quotes";
+import { getQuotes } from "./api/quotes";
 import Categories from "./components/Categories.vue";
 import Loader from "./components/Loader.vue";
 import Social from "./components/Social.vue";
+import { shareOnFacebook, shareOnTelegram } from "./data/share";
 
-export default {
+export default defineComponent({
   components: {
     Quote,
     History,
@@ -14,70 +16,82 @@ export default {
     Categories,
     Social,
   },
-  data() {
-    return {
-      quote: null,
-      quotes: [],
-      errorMessage: "",
-      isLoading: false,
-      category: '',
-      isShare: false,
-    };
-  },
-  mounted() {
-    this.download();
-  },
-  methods: {
-    onClick() {
-      if (this.quote[0]) {
-        this.quotes.unshift(this.quote[0]);
-      }
-      this.download();
-    },
-    download() {
-      this.errorMessage = "";
-      this.isLoading = true;
-      (this.category ? getQuoteCategory(this.category) : getQuote())
-        .then((response) => {
-          this.quote = response.data;
+  setup() {
+    const quote = ref(null);
+    const quotes = ref([]);
+    const errorMessage = ref("");
+    const isLoading = ref(false);
+    const category = ref("");
+    const isShare = ref(false);
+
+    const download = () => {
+      errorMessage.value = "";
+      isLoading.value = true;
+      isShare.value = false;
+      (category.value ? getQuotes(category.value) : getQuotes())
+        .then(({ data }) => {
+          quote.value = data && data[0];
         })
-        .catch(() => {
-          this.errorMessage =
-            "Sorry, the server is not responding right now. Try again later.";
+        .catch((error) => {
+          errorMessage.value =
+            error.response?.status === 404
+              ? "No quote found for this category."
+              : "Sorry, the server is currently unavailable. Try again later.";
         })
         .finally(() => {
-          this.isLoading = false;
+          isLoading.value = false;
         });
-    },
-    shareTelegram() {
-      if (this.quote && this.quote.length > 0) {
-        const quoteText = encodeURIComponent(`${this.quote[0].quote} - ${this.quote[0].author}`);
-        const telegramUrl = `https://t.me/share/url?url=${window.location.href}&text=${quoteText}`;
-        window.open(telegramUrl, "_blank");
-        console.log(quoteText);
-        this.isShare = false;
+    };
+
+    const onClick = () => {
+      if (quote.value) {
+        quotes.value.unshift(quote.value);
+        download();
       }
-    },
-    shareFacebook() {
-      if (this.quote && this.quote.length > 0) {
-        const currentUrl = window.location.href; 
-    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`;
-        window.open(facebookUrl, "_blank");
-        this.isShare = false;
-    
+    };
+
+    const shareTelegram = () => {
+      if (quote.value) {
+        shareOnTelegram(quote.value);
+        isShare.value = false;
       }
-    },
+    };
+
+    const shareFacebook = () => {
+      if (quote.value) {
+        shareOnFacebook();
+        isShare.value = false;
+      }
+    };
+
+    onMounted(() => {
+      download();
+    });
+
+    return {
+      quote,
+      quotes,
+      errorMessage,
+      isLoading,
+      isShare,
+      onClick,
+      shareFacebook,
+      shareTelegram,
+      download,
+    }
   },
-};
+});
 </script>
 
 <template>
   <main>
     <h1 class="title">Quotes of famous people</h1>
     <Loader v-if="isLoading" />
-    <Social v-if="isShare" @close="isShare = false"
-    @telegramm="shareTelegram"
-    @facebook="shareFacebook"
+    <Social
+      v-if="isShare"
+      @close="isShare = false"
+      @telegramm="shareTelegram"
+      @facebook="shareFacebook"
     />
     <Categories class="category" @category="category = $event" />
     <Quote
@@ -91,7 +105,7 @@ export default {
   </main>
 </template>
 
-<style>
+<style scoped>
 .title {
   font-size: 42px;
   text-transform: uppercase;
@@ -100,5 +114,4 @@ export default {
   padding: 20px;
   margin-bottom: 20px;
 }
-
 </style>

@@ -1,6 +1,5 @@
 <script>
-export default {
-}
+export default {};
 </script>
 
 <template>
@@ -9,7 +8,7 @@ export default {
   </div>
 </template>
 
-<style>
+<style scoped>
 .loader {
   position: absolute;
   display: flex;
@@ -23,7 +22,7 @@ export default {
   height: 5em;
   margin: 1em auto;
   border: 0.5em solid #ddd;
-  border-left-color: #000;
+  border-left-color: coral;
   animation: load 1.2s infinite linear;
 }
 
