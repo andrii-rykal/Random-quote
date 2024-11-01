@@ -1,15 +1,35 @@
 <script>
-export default {
+import { defineComponent } from "vue";
+
+export default defineComponent({
   emits: ["close", "telegramm", "facebook"],
-  methods: {},
-};
+  setup(_, { emit }) {
+    const close = () => {
+      emit("close");
+    };
+
+    const shareOnTelegram = () => {
+      emit("telegramm");
+    };
+
+    const shareOnFacebook = () => {
+      emit("facebook");
+    };
+
+    return {
+      close,
+      shareOnFacebook,
+      shareOnTelegram
+    };
+  },
+});
 </script>
 
 <template>
   <div class="social-block">
-    <button @click="$emit('close')" class="social-btn">X</button>
+    <button @click="close" class="social-btn">X</button>
 
-    <button @click="$emit('telegramm')" class="social-btn">
+    <button @click="shareOnTelegram" class="social-btn">
       <svg
         width="40"
         height="40"
@@ -24,7 +44,7 @@ export default {
         />
       </svg>
     </button>
-    <button @click="$emit('facebook')" class="social-btn">
+    <button @click="shareOnFacebook" class="social-btn">
       <svg
         width="40"
         height="40"
