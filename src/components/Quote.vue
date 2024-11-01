@@ -1,8 +1,8 @@
 <script>
-import { copyToClipboard } from '@/data/copy';
-import { defineComponent, toRefs } from 'vue';
+import { copyToClipboard } from "@/data/copy";
+import { defineComponent, toRefs } from "vue";
 
-export default defineComponent ({
+export default defineComponent({
   props: {
     quote: Object,
     message: String,
@@ -19,11 +19,11 @@ export default defineComponent ({
       quote,
       message,
       copyQuote,
-      emitHistory: () => emit('history'),
-      emitReload: () => emit('reload'),
-      emitShare: () => emit('share')
-    }
-  }
+      emitHistory: () => emit("history"),
+      emitReload: () => emit("reload"),
+      emitShare: () => emit("share"),
+    };
+  },
 });
 </script>
 
@@ -37,7 +37,13 @@ export default defineComponent ({
       <span v-if="quote.category">({{ quote.category }})</span>
     </p>
     <div class="block-btn">
-      <button @click="emitHistory" class="btn">get quote</button>
+      <button
+        @click="emitHistory"
+        class="btn"
+        title="Get quote and add to history"
+      >
+        get quote
+      </button>
       <button v-if="quote" @click="copyQuote(quote)" class="btn">
         Copy Quote
       </button>

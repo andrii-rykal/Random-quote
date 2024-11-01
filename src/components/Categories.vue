@@ -1,18 +1,22 @@
 <script>
+import { defineComponent, ref } from "vue";
 import categories from "../data/categories";
-export default {
-  data() {
-    return {
-      categories,
-    };
-  },
+
+export default defineComponent({
   emits: ["category"],
-  methods: {
-    handleCategoryChange(event) {
-      this.$emit("category", event.target.value);
-    },
-  },
-};
+  setup(_, { emit }) {
+    const select = ref(categories);
+
+    const handleCategoryChange = (event) => {
+      emit("category", event.target.value);
+    };
+
+    return {
+      select,
+      handleCategoryChange,
+    };
+  }
+});
 </script>
 
 <template>
@@ -20,7 +24,7 @@ export default {
     <select name="category" id="category" @change="handleCategoryChange">
       <option value="">Random category</option>
       <option
-        v-for="(category, index) in categories"
+        v-for="(category, index) in select"
         :key="index"
         :value="category"
       >

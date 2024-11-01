@@ -8,7 +8,7 @@ export default defineComponent ({
   },
   setup(props) {
     const { quotes } = toRefs(props);
-    
+
     const copyQuote = (obj) => {
       copyToClipboard(obj);
     };
@@ -69,13 +69,15 @@ export default defineComponent ({
   padding: 16px;
 }
 
-.history .quotes {
+.quotes {
   padding-top: 5px;
   font-size: 16px;
 }
 
-.history .author {
+.author {
   font-size: 14px;
+  text-align: right;
+  margin-bottom: 8px;
 }
 
 @media (min-width: 900px) {

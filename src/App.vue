@@ -43,6 +43,10 @@ export default defineComponent({
         });
     };
 
+    const setCategory = (newCategory) => {
+      category.value = newCategory;
+    }
+
     const onClick = () => {
       if (quote.value) {
         quotes.value.unshift(quote.value);
@@ -77,6 +81,7 @@ export default defineComponent({
       onClick,
       shareFacebook,
       shareTelegram,
+      setCategory,
       download,
     }
   },
@@ -93,7 +98,7 @@ export default defineComponent({
       @telegramm="shareTelegram"
       @facebook="shareFacebook"
     />
-    <Categories class="category" @category="category = $event" />
+    <Categories class="category" @category="setCategory" />
     <Quote
       :quote="quote"
       :message="errorMessage"
