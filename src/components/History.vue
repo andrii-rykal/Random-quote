@@ -1,14 +1,24 @@
 <script>
 import { copyToClipboard } from "@/data/copy";
+import { defineComponent, toRefs } from "vue";
 
-export default {
-  props: ["quotes"],
-  methods: {
-    copyQuote(obj) {
-      copyToClipboard(obj);
-    },
+export default defineComponent ({
+  props: {
+    quotes: Array,
   },
-};
+  setup(props) {
+    const { quotes } = toRefs(props);
+    
+    const copyQuote = (obj) => {
+      copyToClipboard(obj);
+    };
+
+    return {
+      quotes,
+      copyQuote
+    }
+  }
+});
 </script>
 
 <template>
