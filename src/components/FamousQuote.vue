@@ -9,7 +9,7 @@ export default defineComponent({
   },
   emits: ['history', 'reload', 'share'],
   setup(props, { emit }) {
-    const { currentQuote: currentQuote, message: errorMessage } = toRefs(props);
+    const { quote: currentQuote, message: errorMessage } = toRefs(props);
 
     const copyQuote = obj => {
       copyToClipboard(obj);

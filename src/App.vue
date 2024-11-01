@@ -104,7 +104,7 @@ export default defineComponent({
       @category="setCategory"
     />
     <FamousQuote
-      :currentQuote="quote"
+      :quote="quote"
       :message="errorMessage"
       @history="onClick"
       @reload="download"
