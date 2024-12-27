@@ -2,7 +2,7 @@
 
 This application allows you to get a random quote from ninjas.com. It stores the history of quotes and allows you to copy the quote and share the quote on social networks. It also implements the selection of the quote category to display. The application is created using the Vue.js framework.
 
-[DEMO](https://andrii-rykal.github.io/huawei-test-task/)
+[DEMO](https://andrii-rykal.github.io/Random-quote/)
 
 ## Recommended IDE Setup
 
