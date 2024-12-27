@@ -5,7 +5,7 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/huawei-test-task/',
+  base: '/Random-quote/',
   plugins: [
     vue(),
   ],
